@@ -8,20 +8,37 @@ interface HeaderProps {
   currentPlan: PlanType
   onGetStarted: () => void
 }
+
 /**
- * Main navigation header for landing page
+ * Navigation item types
+ */
+type NavItem =
+  | { label: string; type: 'scroll'; id: string }
+  | { label: string; type: 'link'; href: string }
+
+/**
+ * Main navigation header for the landing page
  */
 export function Header({ currentPlan, onGetStarted }: HeaderProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
-  const navItems = [
-    { label: 'Home', id: 'hero' },
-    { label: 'Demo', id: 'demo' },
-    { label: 'Features', id: 'features' },
-    { label: 'Blog', id: 'blog' },
-    { label: 'Pricing', id: 'pricing' },
-    { label: 'Changelog', id: 'changelog' },
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  /**
+   * List of navigation items
+   * - scroll: smooth-scroll to section
+   * - link: navigate to external/internal static page
+   */
+  const navItems: NavItem[] = [
+    { label: 'Home', type: 'scroll', id: 'hero' },
+    { label: 'Demo', type: 'scroll', id: 'demo' },
+    { label: 'Features', type: 'scroll', id: 'features' },
+    { label: 'Blog', type: 'link', href: '/blog/index.html' },
+    { label: 'Pricing', type: 'scroll', id: 'pricing' },
+    { label: 'Changelog', type: 'scroll', id: 'changelog' },
   ]
 
+  /**
+   * Smooth-scroll to local page section
+   */
   const scrollToSection = (sectionId: string): void => {
     const element = document.getElementById(sectionId)
     if (element) {
@@ -30,6 +47,19 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
     }
   }
 
+  /**
+   * Handles navigation item clicks
+   * - scroll → scroll into section
+   * - link → open static blog (or any other link)
+   */
+  const handleNavClick = (item: NavItem) => {
+    if (item.type === 'scroll') {
+      scrollToSection(item.id)
+    } else if (item.type === 'link') {
+      // Always force full page load for blog
+      window.location.assign(item.href)
+    }
+  }
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,12 +75,12 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
             <span className="text-slate-900 text-xl">RoadmapPro [Beta]</span>
           </button>
 
-          {/* Desktop Navigation */}
+          {/* Desktop navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                key={item.label}
+                onClick={() => handleNavClick(item)}
                 className="text-slate-600 hover:text-purple-600 transition-colors"
               >
                 {item.label}
@@ -58,7 +88,7 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
             ))}
           </nav>
 
-          {/* Right side: User section and CTA */}
+          {/* Right section */}
           <div className="flex items-center gap-4">
             {/* Plan badge */}
             <Badge
@@ -78,7 +108,7 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
               Account
             </Button>
 
-            {/* Get Started button */}
+            {/* CTA */}
             <Button
               onClick={onGetStarted}
               size="sm"
@@ -102,19 +132,20 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile navigation */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white">
           <nav className="px-4 py-4 space-y-2">
             {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                key={item.label}
+                onClick={() => handleNavClick(item)}
                 className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
               >
                 {item.label}
               </button>
             ))}
+
             <button className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors">
               <User className="w-4 h-4 inline mr-2" />
               Account

@@ -22,28 +22,40 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Product */}
-          <div>
-            <h4 className="text-white mb-4">Product</h4>
-            <ul className="space-y-2">
+          {/* Contacts - добавлено */}
+          <div className="col-span-1 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-4">
+              {/* Заголовок контактов того же размера и стиля, что и RoadmapPro */}
+              <span className="text-white text-xl">Contacts</span>
+            </div>
+
+            <ul className="text-slate-400 space-y-2">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Features
+                <a
+                  href="mailto:Abba4game@gmail.com"
+                  className="hover:text-white transition-colors"
+                >
+                  Abba4game@gmail.com
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Pricing
+                <a
+                  href="https://t.me/saifer714"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Telegram: @saifer714
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Templates
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Changelog
+                <a
+                  href="https://www.reddit.com/user/Sad-Bed-3125/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Reddit: Sad-Bed-3125
                 </a>
               </li>
             </ul>
@@ -55,17 +67,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
                   Blog
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Contact
                 </a>
               </li>
               <li>

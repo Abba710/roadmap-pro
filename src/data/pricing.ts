@@ -11,9 +11,9 @@ export const PRICING_PLANS: Plan[] = [
     interval: 'forever',
     features: [
       '1 roadmap',
-      'Basic templates',
-      'Drag & drop editor',
+      'Drag & Drop editor',
       'Progress tracking',
+      'Color themes',
     ],
     limits: {
       maxRoadmaps: 1,
@@ -24,19 +24,18 @@ export const PRICING_PLANS: Plan[] = [
   },
   {
     id: 'monthly',
-    name: 'Pro Monthly',
+    name: 'Pro',
     price: 10,
     interval: 'month',
     features: [
+      'All Free features',
       'Unlimited roadmaps',
       'PDF export',
-      'Custom themes',
-      'Team collaboration',
-      'Priority support',
-      'Advanced analytics',
+      'Share roadmap',
+      'All future updates and improvements from the roadmap',
     ],
     limits: {
-      maxRoadmaps: -1, // -1 means unlimited
+      maxRoadmaps: -1,
       pdfExport: true,
       teamCollaboration: true,
       customThemes: true,
@@ -45,16 +44,14 @@ export const PRICING_PLANS: Plan[] = [
   {
     id: 'yearly',
     name: 'Pro Yearly',
-    price: 100,
-    interval: 'year',
+    price: 5,
+    interval: 'month',
     features: [
+      'All Free features',
       'Unlimited roadmaps',
       'PDF export',
-      'Custom themes',
-      'Team collaboration',
-      'Priority support',
-      'Advanced analytics',
-      'Save $20/year',
+      'All future updates and improvements from the roadmap',
+      'Save $60/year',
     ],
     limits: {
       maxRoadmaps: -1,

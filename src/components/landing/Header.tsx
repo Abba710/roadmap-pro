@@ -8,12 +8,19 @@ interface HeaderProps {
   currentPlan: PlanType
   onGetStarted: () => void
 }
-
 /**
  * Main navigation header for landing page
  */
 export function Header({ currentPlan, onGetStarted }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
+  const navItems = [
+    { label: 'Home', id: 'hero' },
+    { label: 'Demo', id: 'demo' },
+    { label: 'Features', id: 'features' },
+    { label: 'Blog', id: 'blog' },
+    { label: 'Pricing', id: 'pricing' },
+    { label: 'Changelog', id: 'changelog' },
+  ]
 
   const scrollToSection = (sectionId: string): void => {
     const element = document.getElementById(sectionId)
@@ -22,14 +29,6 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
       setMobileMenuOpen(false)
     }
   }
-
-  const navItems = [
-    { label: 'Home', id: 'hero' },
-    { label: 'Demo', id: 'demo' },
-    { label: 'Blog', id: 'blog' },
-    { label: 'Pricing', id: 'pricing' },
-    { label: 'Changelog', id: 'changelog' },
-  ]
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">

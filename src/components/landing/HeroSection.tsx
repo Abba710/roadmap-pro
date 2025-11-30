@@ -1,8 +1,8 @@
-import { Button } from "../ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Button } from '../ui/button'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 interface HeroSectionProps {
-  onGetStarted: () => void;
+  onGetStarted: () => void
 }
 
 /**
@@ -10,19 +10,22 @@ interface HeroSectionProps {
  */
 export function HeroSection({ onGetStarted }: HeroSectionProps) {
   const scrollToDemo = (): void => {
-    const element = document.getElementById("demo");
+    const element = document.getElementById('demo')
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-  };
+  }
 
   return (
-    <section id="hero" className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 pt-20 pb-32">
+    <section
+      id="hero"
+      className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 pt-20 pb-32"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-100 opacity-50" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           {/* Badge */}
@@ -40,8 +43,9 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
 
           {/* Subheading */}
           <p className="mx-auto max-w-2xl mb-10 text-slate-600 text-xl">
-            Create stunning development roadmaps with our intuitive drag-and-drop builder. 
-            Perfect for product managers, developers, and teams.
+            Create stunning development roadmaps with our intuitive
+            drag-and-drop builder. Perfect for product managers, founders and
+            teams.
           </p>
 
           {/* CTA buttons */}
@@ -71,5 +75,5 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         </div>
       </div>
     </section>
-  );
+  )
 }

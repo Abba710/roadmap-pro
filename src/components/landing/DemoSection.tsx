@@ -25,106 +25,95 @@ interface DemoPhase {
 export function DemoSection() {
   const [phases, setPhases] = useState<DemoPhase[]>([
     {
-      id: 'mvp',
-      name: 'MVP',
-      status: 'Completed',
-      theme: 'green',
-      icon: '🚀',
-      tasks: [
-        {
-          id: 'm1',
-          title: 'Market and competitor research',
-          completed: true,
-        },
-        { id: 'm2', title: 'Design and prototypes', completed: true },
-        {
-          id: 'm3',
-          title: 'User authentication and profiles',
-          completed: true,
-        },
-        {
-          id: 'm4',
-          title: 'Payment integration and subscriptions',
-          completed: true,
-        },
-        { id: 'm5', title: 'Roadmap builder', completed: true },
-        { id: 'm6', title: 'Timeline and sidebar', completed: true },
-        { id: 'm7', title: 'Export to PDF', completed: true },
-        { id: 'm8', title: 'Public MVP launch', completed: true },
-      ],
-    },
-    {
-      id: 'beta',
-      name: 'Open Beta',
+      id: 'now',
+      name: 'Now',
       status: 'In Progress',
       theme: 'purple',
       icon: '⚡',
       tasks: [
         {
-          id: 'b1',
-          title: 'Display tasks directly on the timeline',
+          id: 'n1',
+          title:
+            'Timeline Experience (tasks on timeline, deadlines, dependencies)',
           completed: false,
         },
         {
-          id: 'b2',
-          title: 'Notifications for deadlines and changes',
+          id: 'n2',
+          title: 'Collaboration (real-time editing, notifications)',
           completed: false,
         },
         {
-          id: 'b3',
-          title: 'Real-time collaboration on roadmaps',
+          id: 'n3',
+          title: 'Publishing & Sharing (public links, embed on websites)',
           completed: false,
         },
         {
-          id: 'b4',
-          title: 'Set deadlines and task dependencies',
+          id: 'n4',
+          title: 'Templates & Starter Packs',
           completed: false,
         },
         {
-          id: 'b5',
-          title: 'Embed roadmaps on any website',
-          completed: false,
-        },
-        {
-          id: 'b6',
-          title: 'Ready-made templates for different niches',
-          completed: false,
-        },
-        {
-          id: 'b7',
-          title: 'Analytics for views and progress',
+          id: 'n5',
+          title: 'Analytics (views, progress insights)',
           completed: false,
         },
       ],
     },
+
     {
-      id: 'full-release',
-      name: 'Full Version 1.0',
+      id: 'next',
+      name: 'Next',
+      status: 'Planned',
+      theme: 'green',
+      icon: '🚀',
+      tasks: [
+        {
+          id: 'x1',
+          title:
+            'AI Assistant (auto-generate roadmap from project description)',
+          completed: false,
+        },
+        {
+          id: 'x2',
+          title:
+            'Advanced Building Tools (subtasks, checklists, file attachments)',
+          completed: false,
+        },
+        {
+          id: 'x3',
+          title: 'Integrations (Notion, Trello, Jira, Slack)',
+          completed: false,
+        },
+        {
+          id: 'x4',
+          title: 'Team Workspaces (roles and permissions)',
+          completed: false,
+        },
+      ],
+    },
+
+    {
+      id: 'later',
+      name: 'Later',
       status: 'Planned',
       theme: 'gold',
       icon: '🤖',
       tasks: [
         {
-          id: 'f1',
-          title: 'AI Assistant: Auto-generate roadmap from project description',
+          id: 'l1',
+          title: 'Public & Private Roadmaps v2 (collections, gallery, sharing)',
           completed: false,
         },
         {
-          id: 'f2',
-          title: 'Advanced stage creation: subtasks, checklists, files',
+          id: 'l2',
+          title: 'Platform Ecosystem (API, webhooks, extensions)',
           completed: false,
         },
         {
-          id: 'f3',
-          title: 'Integrations (Notion, Trello, Jira, Slack)',
+          id: 'l3',
+          title: 'Mobile (iOS app + offline PWA)',
           completed: false,
         },
-        {
-          id: 'f4',
-          title: 'Public and private roadmaps',
-          completed: false,
-        },
-        { id: 'f5', title: 'Team workspaces', completed: false },
       ],
     },
   ])

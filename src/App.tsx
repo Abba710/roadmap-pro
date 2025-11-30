@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { LandingPage } from './components/landing/LandingPage'
 import { RoadmapBuilder } from './components/builder/RoadmapBuilder'
+import { BlogPage } from './components/blog/blog'
+import { PricingPage } from './components/pricing/price'
 import { useSubscription } from './hooks/useSubscription'
 
 export default function App() {
@@ -12,15 +14,14 @@ export default function App() {
         path="/"
         element={
           <LandingPage
-            onGetStarted={() => (window.location.href = '/app')}
+            onGetStarted={() => (window.location.href = '/app/')}
             subscription={sub.subscription}
-            onUpgrade={sub.upgradePlan}
           />
         }
       />
 
       <Route
-        path="/app/*"
+        path="/app/"
         element={
           <RoadmapBuilder
             onBack={() => (window.location.href = '/')}
@@ -35,8 +36,24 @@ export default function App() {
       />
 
       <Route
-        path="/blog/*"
-        element={<Navigate to="/blog/index.html" replace />}
+        path="/blog/"
+        element={
+          <BlogPage
+            onGetStarted={() => (window.location.href = '/app/')}
+            subscription={sub.subscription}
+          />
+        }
+      />
+
+      <Route
+        path="/pricing/"
+        element={
+          <PricingPage
+            currentPlan={sub.subscription.plan}
+            onUpgrade={sub.upgradePlan}
+            onGetStarted={() => (window.location.href = '/app/')}
+          />
+        }
       />
 
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -3,88 +3,58 @@ import { Sparkles, Menu, X, User } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
 import type { PlanType } from '../../types/subscription'
+import { NavLink } from 'react-router-dom'
+import { scrollToTop } from '@/utils/simpleUtils'
 
 interface HeaderProps {
   currentPlan: PlanType
   onGetStarted: () => void
 }
 
-/**
- * Navigation item types
- */
-type NavItem =
-  | { label: string; type: 'scroll'; id: string }
-  | { label: string; type: 'link'; href: string }
+type NavItem = { label: string; type: 'link'; href: string }
 
-/**
- * Main navigation header for the landing page
- */
 export function Header({ currentPlan, onGetStarted }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  /**
-   * List of navigation items
-   * - scroll: smooth-scroll to section
-   * - link: navigate to external/internal static page
-   */
   const navItems: NavItem[] = [
-    { label: 'Home', type: 'scroll', id: 'hero' },
-    { label: 'Demo', type: 'scroll', id: 'demo' },
-    { label: 'Features', type: 'scroll', id: 'features' },
-    { label: 'Blog', type: 'link', href: '/blog/index.html' },
-    { label: 'Pricing', type: 'scroll', id: 'pricing' },
-    { label: 'Changelog', type: 'scroll', id: 'changelog' },
+    { label: 'Home', type: 'link', href: '/' },
+    { label: 'Pricing', type: 'link', href: '/pricing/' },
+    { label: 'Blog', type: 'link', href: '/blog/' },
+    { label: 'Changelog', type: 'link', href: '/changelog/' },
   ]
 
-  /**
-   * Smooth-scroll to local page section
-   */
-  const scrollToSection = (sectionId: string): void => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setMobileMenuOpen(false)
-    }
-  }
-
-  /**
-   * Handles navigation item clicks
-   * - scroll → scroll into section
-   * - link → open static blog (or any other link)
-   */
-  const handleNavClick = (item: NavItem) => {
-    if (item.type === 'scroll') {
-      scrollToSection(item.id)
-    } else if (item.type === 'link') {
-      // Always force full page load for blog
-      window.location.assign(item.href)
-    }
-  }
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button
-            onClick={() => scrollToSection('hero')}
+          <NavLink
+            to="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <span className="text-slate-900 text-xl">RoadmapPro [Beta]</span>
-          </button>
+          </NavLink>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <button
+              <NavLink
                 key={item.label}
-                onClick={() => handleNavClick(item)}
-                className="text-slate-600 hover:text-purple-600 transition-colors"
+                to={item.href}
+                end={item.href === '/'}
+                className={({ isActive }) =>
+                  ` ${
+                    isActive
+                      ? 'text-purple-600 font-semibold'
+                      : 'text-slate-600 hover:text-purple-600 transition-colors'
+                  }`
+                }
               >
                 {item.label}
-              </button>
+              </NavLink>
             ))}
           </nav>
 
@@ -137,19 +107,31 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
         <div className="md:hidden border-t border-slate-200 bg-white">
           <nav className="px-4 py-4 space-y-2">
             {navItems.map((item) => (
-              <button
+              <NavLink
                 key={item.label}
-                onClick={() => handleNavClick(item)}
-                className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
+                to={item.href}
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  scrollToTop()
+                }}
+                className={({ isActive }) =>
+                  `block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors ${
+                    isActive ? 'text-purple-600 font-semibold' : ''
+                  }`
+                }
               >
                 {item.label}
-              </button>
+              </NavLink>
             ))}
 
-            <button className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors">
+            <NavLink
+              to="/account"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
+            >
               <User className="w-4 h-4 inline mr-2" />
               Account
-            </button>
+            </NavLink>
           </nav>
         </div>
       )}

@@ -1,4 +1,6 @@
 import { Sparkles } from 'lucide-react'
+import { NavLink } from 'react-router-dom'
+import { scrollToTop } from '@/utils/simpleUtils'
 
 /**
  * Footer component
@@ -66,9 +68,13 @@ export function Footer() {
             <h4 className="text-white mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <NavLink
+                  to="/blog/"
+                  onClick={scrollToTop}
+                  className="hover:text-white transition-colors"
+                >
                   Blog
-                </a>
+                </NavLink>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">

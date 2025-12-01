@@ -1,4 +1,4 @@
-import { ArrowLeft, Download, Sparkles, Crown } from 'lucide-react'
+import { ArrowLeft, Download, Sparkles, Crown, Menu, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
 import type { PlanType } from '../../types/subscription'
@@ -9,6 +9,8 @@ interface BuilderHeaderProps {
   hasPdfExport: boolean
   currentPlan: PlanType
   roadmapName?: string
+  mobile: boolean
+  setMobile: (mobile: boolean) => void
 }
 
 /**
@@ -20,13 +22,26 @@ export function BuilderHeader({
   hasPdfExport,
   currentPlan,
   roadmapName,
+  mobile,
+  setMobile,
 }: BuilderHeaderProps) {
   return (
     <header className="bg-white border-b border-slate-200 shadow-sm z-10">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMobile(!mobile)}
+            className="md:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
+          >
+            {mobile ? (
+              <X className="w-5 h-5 text-slate-700" />
+            ) : (
+              <Menu className="w-5 h-5 text-slate-700" />
+            )}
+          </button>
           {/* Left: Back button and logo */}
-          <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" onClick={onBack} className="gap-2">
               <ArrowLeft className="w-4 h-4" />
               Back

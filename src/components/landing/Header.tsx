@@ -20,7 +20,6 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
     { label: 'Home', type: 'link', href: '/' },
     { label: 'Pricing', type: 'link', href: '/pricing/' },
     { label: 'Blog', type: 'link', href: '/blog/' },
-    { label: 'Changelog', type: 'link', href: '/changelog/' },
   ]
 
   return (

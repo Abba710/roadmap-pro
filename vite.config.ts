@@ -52,8 +52,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        landing: path.resolve(__dirname, 'src/landing/index.html'),
-        app: path.resolve(__dirname, 'src/app/index.html'),
+        app: path.resolve(__dirname, 'src/main.tsx'),
       },
     },
   },

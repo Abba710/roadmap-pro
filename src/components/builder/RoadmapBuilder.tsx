@@ -59,6 +59,7 @@ export function RoadmapBuilder({
 
   const [showForm, setShowForm] = useState<boolean>(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState<boolean>(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   /**
    * Handle creating a new roadmap
@@ -122,6 +123,8 @@ export function RoadmapBuilder({
         onUpdateRoadmap={updateRoadmap}
         canCreate={canCreateRoadmap}
         onUpgradeClick={() => setShowUpgradeModal(true)}
+        mobile={mobileMenuOpen}
+        setMobile={setMobileMenuOpen}
       />
 
       {/* Main Content */}
@@ -133,6 +136,8 @@ export function RoadmapBuilder({
           hasPdfExport={hasPdfExport}
           currentPlan={subscription.plan}
           roadmapName={activeRoadmap?.name || ''}
+          mobile={mobileMenuOpen}
+          setMobile={setMobileMenuOpen}
         />
 
         {/* Content Area */}

@@ -1,8 +1,9 @@
-import { Plus, FolderOpen, Trash2, Edit2, Check, X } from 'lucide-react'
+import { Plus, FolderOpen, Trash2, Edit2, Check, X, User } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Badge } from '../ui/badge'
 import { Input } from '../ui/input'
+import { NavLink } from 'react-router-dom'
 import type { Roadmap } from '../../types/roadmap'
 import { useState } from 'react'
 
@@ -16,6 +17,8 @@ interface SidebarProps {
   onUpdateRoadmap: (id: string, updates: Partial<Roadmap>) => void
   canCreate: boolean
   onUpgradeClick: () => void
+  mobile: boolean
+  setMobile: (mobile: boolean) => void
 }
 
 /**
@@ -32,6 +35,8 @@ export function Sidebar({
   onUpdateRoadmap,
   canCreate,
   onUpgradeClick,
+  mobile,
+  setMobile,
 }: SidebarProps) {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editName, setEditName] = useState<string>('')
@@ -74,6 +79,14 @@ export function Sidebar({
   }
 
   /**
+   * Handle mobile roadmap selection
+   */
+  const handleMobileSelect = (id: string): void => {
+    onSelectRoadmap(id)
+    setMobile(!mobile)
+  }
+
+  /**
    * Format date for display
    */
   const formatDate = (timestamp: number): string => {
@@ -81,27 +94,14 @@ export function Sidebar({
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   }
 
-  return (
-    <aside className="w-80 bg-white border-r border-slate-200 flex flex-col h-full">
-      {/* Sidebar Header */}
-      <div className="p-6 border-b border-slate-200">
-        <h2 className="mb-4 text-slate-900">My Roadmaps</h2>
-        <Button
-          onClick={handleCreate}
-          className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Roadmap
-        </Button>
-        {!canCreate && (
-          <p className="text-xs text-orange-600 mt-2 text-center">
-            Free plan: 1 roadmap limit
-          </p>
-        )}
-      </div>
+  /**
+   * Render roadmap list
+   */
+  const renderRoadmapList = (isMobile: boolean = false) => {
+    const handleSelect = isMobile ? handleMobileSelect : onSelectRoadmap
 
-      {/* Roadmaps List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+    return (
+      <>
         {roadmaps.length === 0 ? (
           <div className="text-center py-12">
             <FolderOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
@@ -123,7 +123,7 @@ export function Sidebar({
                     ? 'border-2 border-purple-500 bg-purple-50 shadow-md'
                     : 'border border-slate-200 hover:border-slate-300 hover:shadow-sm'
                 }`}
-                onClick={() => !isEditing && onSelectRoadmap(roadmap.id)}
+                onClick={() => !isEditing && handleSelect(roadmap.id)}
               >
                 {/* Roadmap Name */}
                 {isEditing ? (
@@ -161,7 +161,7 @@ export function Sidebar({
                 ) : (
                   <div className="flex items-start justify-between mb-2">
                     <h3
-                      className={`text-sm ${
+                      className={`text-sm font-medium ${
                         isActive ? 'text-purple-900' : 'text-slate-900'
                       }`}
                     >
@@ -225,14 +225,108 @@ export function Sidebar({
             )
           })
         )}
-      </div>
+      </>
+    )
+  }
 
-      {/* Sidebar Footer */}
-      <div className="p-4 border-t border-slate-200 bg-slate-50">
-        <p className="text-xs text-slate-600 text-center">
-          {roadmaps.length} roadmap{roadmaps.length !== 1 ? 's' : ''} total
-        </p>
-      </div>
-    </aside>
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="w-80 bg-white border-r border-slate-200 hidden md:flex flex-col h-full">
+        {/* Sidebar Header */}
+        <div className="p-6 border-b border-slate-200">
+          <h2 className="mb-4 text-slate-900">My Roadmaps</h2>
+          <Button
+            onClick={handleCreate}
+            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Roadmap
+          </Button>
+          {!canCreate && (
+            <p className="text-xs text-orange-600 mt-2 text-center">
+              Free plan: 1 roadmap limit
+            </p>
+          )}
+        </div>
+
+        {/* Roadmaps List */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+          {renderRoadmapList(false)}
+        </div>
+
+        {/* Sidebar Footer */}
+        <div className="p-4 border-t border-slate-200 bg-slate-50">
+          <NavLink
+            to="/account"
+            onClick={() => setMobile(!mobile)}
+            className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
+          >
+            <User className="w-4 h-4 inline mr-2" />
+            Account
+          </NavLink>
+        </div>
+      </aside>
+
+      {/* Mobile Sidebar */}
+      {mobile && (
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            onClick={() => {
+              setMobile(!mobile)
+            }}
+          />
+
+          {/* Sidebar Panel */}
+          <aside className="fixed top-0 left-0 bottom-0 w-80 bg-white shadow-2xl z-50 md:hidden flex flex-col">
+            {/* Sidebar Header */}
+            <div className="p-6 border-b border-slate-200">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-slate-900">My Roadmaps</h2>
+                <button
+                  onClick={() => {
+                    setMobile(!mobile)
+                  }}
+                  className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-slate-700" />
+                </button>
+              </div>
+              <Button
+                onClick={handleCreate}
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Roadmap
+              </Button>
+              {!canCreate && (
+                <p className="text-xs text-orange-600 mt-2 text-center">
+                  Free plan: 1 roadmap limit
+                </p>
+              )}
+            </div>
+
+            {/* Roadmaps List */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-2">
+              {renderRoadmapList(true)}
+            </div>
+
+            {/* Sidebar Footer */}
+            <div className="p-4 border-t border-slate-200 bg-slate-50">
+              <NavLink
+                to="/account"
+                onClick={() => setMobile(!mobile)}
+                className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
+              >
+                <User className="w-4 h-4 inline mr-2" />
+                Account
+              </NavLink>
+            </div>
+          </aside>
+        </>
+      )}
+    </>
   )
 }

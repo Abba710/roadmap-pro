@@ -49,7 +49,6 @@ export function RoadmapBuilder({
 
   // Manage active roadmap phases
   const {
-    phases,
     toggleMilestone,
     updatePhases: setPhases,
     getOverallProgress,
@@ -125,6 +124,7 @@ export function RoadmapBuilder({
         onUpgradeClick={() => setShowUpgradeModal(true)}
         mobile={mobileMenuOpen}
         setMobile={setMobileMenuOpen}
+        setShowForm={setShowForm}
       />
 
       {/* Main Content */}
@@ -185,8 +185,8 @@ export function RoadmapBuilder({
                       <>Hide Editor</>
                     ) : (
                       <>
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Phases
+                        <Plus className="w-4 h-4 mr-[0.5px]" />
+                        Edit roadmap
                       </>
                     )}
                   </Button>
@@ -196,32 +196,34 @@ export function RoadmapBuilder({
                 {showForm && (
                   <div className="mb-12">
                     <RoadmapForm
-                      phases={phases}
+                      phases={activeRoadmap.phases}
                       onUpdatePhases={handleUpdatePhases}
                     />
                   </div>
                 )}
 
                 {/* Main Content: Phase Cards or Empty State */}
-                {phases.length === 0 ? (
+                {activeRoadmap.phases.length === 0 ? (
                   <EmptyState />
                 ) : (
                   <>
                     {/* Phase Cards Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-                      {phases.map((phase: Phase, index: number) => (
-                        <PhaseCard
-                          key={phase.id}
-                          phase={phase}
-                          index={index}
-                          onToggleMilestone={toggleMilestone}
-                        />
-                      ))}
+                      {activeRoadmap.phases.map(
+                        (phase: Phase, index: number) => (
+                          <PhaseCard
+                            key={phase.id}
+                            phase={phase}
+                            index={index}
+                            onToggleMilestone={toggleMilestone}
+                          />
+                        )
+                      )}
                     </div>
 
                     {/* Timeline Section */}
                     <TimelineSection
-                      phases={phases}
+                      phases={activeRoadmap.phases}
                       overallProgress={getOverallProgress()}
                       completedMilestones={getTotalCompletedMilestones()}
                       totalMilestones={getTotalMilestones()}

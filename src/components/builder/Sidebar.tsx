@@ -19,6 +19,7 @@ interface SidebarProps {
   onUpgradeClick: () => void
   mobile: boolean
   setMobile: (mobile: boolean) => void
+  setShowForm: (s: boolean) => void
 }
 
 /**
@@ -37,6 +38,7 @@ export function Sidebar({
   onUpgradeClick,
   mobile,
   setMobile,
+  setShowForm,
 }: SidebarProps) {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editName, setEditName] = useState<string>('')
@@ -84,6 +86,7 @@ export function Sidebar({
   const handleMobileSelect = (id: string): void => {
     onSelectRoadmap(id)
     setMobile(!mobile)
+    setShowForm(false)
   }
 
   /**
@@ -123,7 +126,12 @@ export function Sidebar({
                     ? 'border-2 border-purple-500 bg-purple-50 shadow-md'
                     : 'border border-slate-200 hover:border-slate-300 hover:shadow-sm'
                 }`}
-                onClick={() => !isEditing && handleSelect(roadmap.id)}
+                onClick={() => {
+                  if (!isEditing) {
+                    handleSelect(roadmap.id)
+                  }
+                  setShowForm(false)
+                }}
               >
                 {/* Roadmap Name */}
                 {isEditing ? (

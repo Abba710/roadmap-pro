@@ -207,7 +207,7 @@ function DraggablePhaseCard({
       className={isDragging ? 'opacity-50' : 'opacity-100'}
     >
       <Card className="p-5 bg-slate-50 border-2 border-slate-200">
-        <div className="flex items-start gap-4">
+        <div className="flex flex-col md:flex-row items-start gap-4">
           {/* Drag Handle */}
           <div
             ref={(node) => {
@@ -219,7 +219,7 @@ function DraggablePhaseCard({
           </div>
 
           {/* Phase Content */}
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 w-full md:w-fit space-y-4">
             {/* Phase Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
@@ -229,6 +229,7 @@ function DraggablePhaseCard({
                   value={phase.name}
                   onChange={(e) => onUpdate(phase.id, { name: e.target.value })}
                   placeholder="Name"
+                  className="w-full"
                 />
               </div>
 
@@ -241,8 +242,10 @@ function DraggablePhaseCard({
                     onUpdate(phase.id, { status: e.target.value })
                   }
                   placeholder="Status"
+                  className="w-full"
                 />
               </div>
+
               {/* theme color selection */}
               <div>
                 <Label htmlFor={`phase-theme-${phase.id}`}>Theme Color</Label>
@@ -252,10 +255,11 @@ function DraggablePhaseCard({
                     onUpdate(phase.id, { theme: value as ThemeColor })
                   }
                 >
-                  <SelectTrigger id={`phase-theme-${phase.id}`}>
-                    <div className="flex items-center gap-2">
-                      <SelectValue />
-                    </div>
+                  <SelectTrigger
+                    id={`phase-theme-${phase.id}`}
+                    className="w-full"
+                  >
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(themeColors).map(([key, colorClass]) => (
@@ -273,7 +277,7 @@ function DraggablePhaseCard({
               </div>
 
               {/* Icon Selection */}
-              <div className="w-fit">
+              <div>
                 <Label htmlFor={`phase-icon-${phase.id}`}>Icon</Label>
                 <Select
                   value={phase.icon}
@@ -281,10 +285,11 @@ function DraggablePhaseCard({
                     onUpdate(phase.id, { icon: value as string })
                   }
                 >
-                  <SelectTrigger id={`phase-icon-${phase.id}`}>
-                    <div className="flex items-center gap-2">
-                      <SelectValue />
-                    </div>
+                  <SelectTrigger
+                    id={`phase-icon-${phase.id}`}
+                    className="w-full"
+                  >
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(icons).map(([key, emoji]) => (
@@ -301,7 +306,7 @@ function DraggablePhaseCard({
 
             {/* Milestones Section */}
             <div>
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-2 sm:gap-0">
                 <Label>Tasks and Goals</Label>
                 <Button
                   size="sm"
@@ -320,25 +325,23 @@ function DraggablePhaseCard({
                     No tasks. Add the first task
                   </div>
                 ) : (
-                  phase.milestones.map(
-                    (milestone: Milestone, milestoneIndex: number) => (
-                      <DraggableMilestone
-                        key={milestone.id}
-                        phaseId={phase.id}
-                        milestone={milestone}
-                        index={milestoneIndex}
-                        onMove={onReorderMilestones}
-                        onRemove={onRemoveMilestone}
-                        onUpdate={onUpdateMilestone}
-                      />
-                    )
-                  )
+                  phase.milestones.map((milestone, milestoneIndex) => (
+                    <DraggableMilestone
+                      key={milestone.id}
+                      phaseId={phase.id}
+                      milestone={milestone}
+                      index={milestoneIndex}
+                      onMove={onReorderMilestones}
+                      onRemove={onRemoveMilestone}
+                      onUpdate={onUpdateMilestone}
+                    />
+                  ))
                 )}
               </div>
             </div>
 
             {/* Phase Statistics */}
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex flex-wrap md:flex-nowrap gap-1 pt-2">
               <Badge variant="outline" className="text-xs">
                 Progress: {phase.progress}%
               </Badge>
@@ -346,8 +349,8 @@ function DraggablePhaseCard({
                 Tasks: {phase.milestones.length}
               </Badge>
               <Badge variant="outline" className="text-xs">
-                Completed:{' '}
-                {phase.milestones.filter((m: Milestone) => m.completed).length}
+                Completed: <br />
+                {phase.milestones.filter((m) => m.completed).length}
               </Badge>
             </div>
           </div>
@@ -357,7 +360,7 @@ function DraggablePhaseCard({
             size="sm"
             variant="ghost"
             onClick={() => onRemove(phase.id)}
-            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+            className="text-red-500 hover:text-red-700 hover:bg-red-50 mt-2 md:mt-0"
           >
             <Trash2 className="w-4 h-4" />
           </Button>

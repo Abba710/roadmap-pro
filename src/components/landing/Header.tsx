@@ -74,7 +74,7 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
             {/* User menu */}
             <Button variant="ghost" size="sm" className="hidden md:flex gap-2">
               <User className="w-4 h-4" />
-              Account
+              Sign In
             </Button>
 
             {/* CTA */}
@@ -129,7 +129,7 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
               className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
             >
               <User className="w-4 h-4 inline mr-2" />
-              Account
+              Sign In
             </NavLink>
           </nav>
         </div>

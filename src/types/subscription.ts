@@ -13,8 +13,6 @@ export interface Plan {
   limits: {
     maxRoadmaps: number
     pdfExport: boolean
-    teamCollaboration: boolean
-    customThemes: boolean
   }
 }
 

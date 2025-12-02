@@ -5,6 +5,7 @@ import { Badge } from '../ui/badge'
 import type { PlanType } from '../../types/subscription'
 import { NavLink } from 'react-router-dom'
 import { scrollToTop } from '@/utils/simpleUtils'
+import { signInWithGoogle } from '@/service/auth'
 
 interface HeaderProps {
   currentPlan: PlanType
@@ -72,7 +73,7 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
             </Badge>
 
             {/* User menu */}
-            <Button variant="ghost" size="sm" className="hidden md:flex gap-2">
+            <Button variant="ghost" size="sm" className="hidden md:flex gap-2" onClick={() => {signInWithGoogle()}}>
               <User className="w-4 h-4" />
               Sign In
             </Button>

@@ -3,7 +3,10 @@ import jsPDF from 'jspdf';
 
 const exportToPDF = async (elementId: string) => {
   const element = document.getElementById(elementId);
-  if (!element) return;
+  if (!element) {
+    alert('First create roadmap')
+    return;
+  }
 
   // Show loading indicator
   const loadingToast = document.createElement('div');

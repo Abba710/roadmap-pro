@@ -7,6 +7,7 @@ import { useSubscription } from './hooks/useSubscription'
 
 export default function App() {
   const sub = useSubscription()
+  
 
   return (
     <Routes>

@@ -18,8 +18,6 @@ export const PRICING_PLANS: Plan[] = [
     limits: {
       maxRoadmaps: 1,
       pdfExport: false,
-      teamCollaboration: false,
-      customThemes: false,
     },
   },
   {
@@ -37,8 +35,6 @@ export const PRICING_PLANS: Plan[] = [
     limits: {
       maxRoadmaps: -1,
       pdfExport: true,
-      teamCollaboration: true,
-      customThemes: true,
     },
   },
   {
@@ -56,8 +52,6 @@ export const PRICING_PLANS: Plan[] = [
     limits: {
       maxRoadmaps: -1,
       pdfExport: true,
-      teamCollaboration: true,
-      customThemes: true,
     },
   },
 ]

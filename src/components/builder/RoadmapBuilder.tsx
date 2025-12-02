@@ -12,6 +12,7 @@ import type { Phase } from '../../types/roadmap'
 import { useRoadmap } from '../../hooks/useRoadmap'
 import { useRoadmaps } from '../../hooks/useRoadmaps'
 import type { PlanType, UserSubscription } from '../../types/subscription'
+import exportToPDF from '../../utils/exportPDF'
 
 interface RoadmapBuilderProps {
   onBack: () => void
@@ -94,12 +95,12 @@ export function RoadmapBuilder({
   /**
    * Handle PDF export
    */
-  const handleExportPdf = (): void => {
+  const handleExportPdf = async (): Promise<void> => {
     if (!hasPdfExport) {
       setShowUpgradeModal(true)
       return
     }
-    alert('PDF export feature - coming soon!')
+    await exportToPDF('content-to-export')
   }
 
   // Sync phases when active roadmap changes
@@ -206,7 +207,7 @@ export function RoadmapBuilder({
                 {activeRoadmap.phases.length === 0 ? (
                   <EmptyState />
                 ) : (
-                  <>
+                  <div id="content-to-export" className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 p-5">
                     {/* Phase Cards Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                       {activeRoadmap.phases.map(
@@ -228,7 +229,7 @@ export function RoadmapBuilder({
                       completedMilestones={getTotalCompletedMilestones()}
                       totalMilestones={getTotalMilestones()}
                     />
-                  </>
+                  </div>
                 )}
               </>
             )}

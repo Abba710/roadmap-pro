@@ -14,7 +14,6 @@ export const PRICING_PLANS: Plan[] = [
       'Drag & Drop editor',
       'Progress tracking',
       'Color themes',
-      'PDF export',
     ],
     limits: {
       maxRoadmaps: 1,
@@ -31,7 +30,7 @@ export const PRICING_PLANS: Plan[] = [
     features: [
       'All Free features',
       'Unlimited roadmaps',
-      'PDF export without watermark',
+      'PDF export',
       'Share roadmap',
       'All future updates and improvements from the roadmap',
     ],

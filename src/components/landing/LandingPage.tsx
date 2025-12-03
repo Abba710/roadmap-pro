@@ -4,21 +4,33 @@ import { FeaturesSection } from './FeaturesSection'
 import { DemoSection } from './DemoSection'
 import { BlogSection } from './BlogSection'
 import { Footer } from './Footer'
-import type { UserSubscription } from '../../types/subscription'
+import type { User } from '@/types/user'
 
 interface LandingPageProps {
   onGetStarted: () => void
-  subscription: UserSubscription
+  userData: User | null
+  onSignIn: () => void
+  onSignOut: () => void
 }
 
 /**
  * Main landing page component
  * Showcases the product and pricing
  */
-export function LandingPage({ onGetStarted, subscription }: LandingPageProps) {
+export function LandingPage({
+  onGetStarted,
+  userData,
+  onSignIn,
+  onSignOut,
+}: LandingPageProps) {
   return (
     <div className="min-h-screen bg-white">
-      <Header currentPlan={subscription.plan} onGetStarted={onGetStarted} />
+      <Header
+        onGetStarted={onGetStarted}
+        userData={userData}
+        onSignIn={onSignIn}
+        onSignOut={onSignOut}
+      />
       <HeroSection onGetStarted={onGetStarted} />
       <DemoSection />
       <FeaturesSection />

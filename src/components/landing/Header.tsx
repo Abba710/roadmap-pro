@@ -1,21 +1,31 @@
 import { useState } from 'react'
-import { Sparkles, Menu, X, User } from 'lucide-react'
+import { Sparkles, Menu, X, UserIcon, LogOut } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Badge } from '../ui/badge'
-import type { PlanType } from '../../types/subscription'
 import { NavLink } from 'react-router-dom'
 import { scrollToTop } from '@/utils/simpleUtils'
-import { signInWithGoogle } from '@/service/auth'
+import type { User } from '@/types/user'
 
 interface HeaderProps {
-  currentPlan: PlanType
   onGetStarted: () => void
+  userData: User | null
+  onSignIn: () => void
+  onSignOut: () => void
 }
 
 type NavItem = { label: string; type: 'link'; href: string }
 
-export function Header({ currentPlan, onGetStarted }: HeaderProps) {
+export function Header({
+  onGetStarted,
+  userData,
+  onSignIn,
+  onSignOut,
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const handleSignIn = async () => {
+    localStorage.setItem('authIntent', 'login')
+    await onSignIn()
+  }
 
   const navItems: NavItem[] = [
     { label: 'Home', type: 'link', href: '/' },
@@ -60,29 +70,55 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
 
           {/* Right section */}
           <div className="flex items-center gap-4">
-            {/* Plan badge */}
-            <Badge
-              variant="outline"
-              className={
-                currentPlan === 'free'
-                  ? 'hidden md:inline-flex bg-slate-50 text-slate-700 border-slate-300'
-                  : 'hidden md:inline-flex bg-gradient-to-r from-purple-50 to-blue-50 text-purple-700 border-purple-300'
-              }
-            >
-              {currentPlan === 'free' ? 'Free Plan' : 'Pro Plan'}
-            </Badge>
+            {/* User Info & Auth Actions */}
+            {userData ? (
+              <div className="hidden md:flex items-center gap-3 pl-4 border-l border-slate-200">
+                {/* User Name & Avatar */}
+                <div className="flex items-center gap-2">
+                  {userData.avatar ? (
+                    <img
+                      src={userData.avatar}
+                      alt={userData.name}
+                      className="w-8 h-8 rounded-full border border-slate-200"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                      <UserIcon className="w-4 h-4 text-slate-500" />
+                    </div>
+                  )}
+                  <span className="text-sm font-medium text-slate-700 max-w-[150px] truncate">
+                    {userData.name}
+                  </span>
+                </div>
 
-            {/* User menu */}
-            <Button variant="ghost" size="sm" className="hidden md:flex gap-2" onClick={() => {signInWithGoogle()}}>
-              <User className="w-4 h-4" />
-              Sign In
-            </Button>
+                {/* Logout Button */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onSignOut}
+                  className="text-slate-500 cursor-pointer hover:text-red-600 hover:bg-red-50"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hidden cursor-pointer md:flex gap-2"
+                onClick={handleSignIn}
+              >
+                <UserIcon className="w-4 h-4" />
+                Sign In
+              </Button>
+            )}
 
             {/* CTA */}
             <Button
               onClick={onGetStarted}
               size="sm"
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              className="hidden md:flex cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
             >
               Get Started
             </Button>
@@ -124,14 +160,45 @@ export function Header({ currentPlan, onGetStarted }: HeaderProps) {
               </NavLink>
             ))}
 
-            <NavLink
-              to="/account"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
-            >
-              <User className="w-4 h-4 inline mr-2" />
-              Sign In
-            </NavLink>
+            <div className="border-t border-slate-100 my-2 pt-2">
+              {userData ? (
+                <>
+                  <div className="px-4 py-2 flex items-center gap-2 mb-2">
+                    {userData.avatar && (
+                      <img
+                        src={userData.avatar}
+                        alt="Avatar"
+                        className="w-6 h-6 rounded-full"
+                      />
+                    )}
+                    <span className="text-sm font-semibold text-slate-700">
+                      {userData.name}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                      onSignOut()
+                    }}
+                    className="block w-full text-left px-4 py-3 cursor-pointer text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <LogOut className="w-4 h-4 cursor-pointer inline mr-2" />
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    handleSignIn()
+                  }}
+                  className="block w-full text-left cursor-pointer px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
+                >
+                  <UserIcon className="w-4 h-4 inline mr-2" />
+                  Sign In
+                </button>
+              )}
+            </div>
           </nav>
         </div>
       )}

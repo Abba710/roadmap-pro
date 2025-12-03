@@ -207,7 +207,10 @@ export function RoadmapBuilder({
                 {activeRoadmap.phases.length === 0 ? (
                   <EmptyState />
                 ) : (
-                  <div id="content-to-export" className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 p-5">
+                  <div
+                    id="content-to-export"
+                    className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 p-5"
+                  >
                     {/* Phase Cards Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                       {activeRoadmap.phases.map(

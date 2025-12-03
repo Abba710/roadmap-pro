@@ -1,9 +1,8 @@
-import { Plus, FolderOpen, Trash2, Edit2, Check, X, User } from 'lucide-react'
+import { Plus, FolderOpen, Trash2, Edit2, Check, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Badge } from '../ui/badge'
 import { Input } from '../ui/input'
-import { NavLink } from 'react-router-dom'
 import type { Roadmap } from '../../types/roadmap'
 import { useState } from 'react'
 
@@ -262,18 +261,6 @@ export function Sidebar({
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {renderRoadmapList(false)}
         </div>
-
-        {/* Sidebar Footer */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50">
-          <NavLink
-            to="/account"
-            onClick={() => setMobile(!mobile)}
-            className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
-          >
-            <User className="w-4 h-4 inline mr-2" />
-            Account
-          </NavLink>
-        </div>
       </aside>
 
       {/* Mobile Sidebar */}
@@ -319,18 +306,6 @@ export function Sidebar({
             {/* Roadmaps List */}
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
               {renderRoadmapList(true)}
-            </div>
-
-            {/* Sidebar Footer */}
-            <div className="p-4 border-t border-slate-200 bg-slate-50">
-              <NavLink
-                to="/account"
-                onClick={() => setMobile(!mobile)}
-                className="block w-full text-left px-4 py-3 text-slate-600 hover:text-purple-600 hover:bg-slate-50 rounded-lg transition-colors"
-              >
-                <User className="w-4 h-4 inline mr-2" />
-                Account
-              </NavLink>
             </div>
           </aside>
         </>

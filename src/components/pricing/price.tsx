@@ -6,11 +6,15 @@ import { PRICING_PLANS } from '../../data/pricing'
 import type { PlanType } from '../../types/subscription'
 import { Header } from '@/components/landing/Header'
 import { Footer } from '@/components/landing/Footer'
+import type { User } from '@/types/user'
 
 interface PricingPageProps {
   currentPlan?: PlanType
   onUpgrade?: (plan: PlanType) => void
   onGetStarted?: () => void
+  userData: User | null
+  onSignIn: () => void
+  onSignOut: () => void
 }
 
 /**
@@ -20,6 +24,9 @@ export function PricingPage({
   currentPlan = 'free',
   onUpgrade = () => {},
   onGetStarted = () => {},
+  userData,
+  onSignIn,
+  onSignOut,
 }: PricingPageProps) {
   const handleSelectPlan = (planId: PlanType): void => {
     if (planId !== 'free') {
@@ -30,7 +37,7 @@ export function PricingPage({
 
   return (
     <div className="min-h-screen bg-white">
-      <Header currentPlan={currentPlan} onGetStarted={onGetStarted} />
+      <Header onGetStarted={onGetStarted} userData={userData} onSignIn={onSignIn} onSignOut={onSignOut} />
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-br from-purple-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

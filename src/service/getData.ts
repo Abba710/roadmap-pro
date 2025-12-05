@@ -2,7 +2,7 @@ import { supabase } from '@/service/supabase'
 import type { Roadmap } from '@/types/roadmap'
 
 export async function getAllRoadmaps() {
-  // Получаем текущую сессию
+  // Get the current session
   const {
     data: { user },
     error: userError,
@@ -18,19 +18,19 @@ export async function getAllRoadmaps() {
     return { data: null, error: new Error('No user logged in') }
   }
 
-  // Получаем все roadmaps текущего пользователя
+  // Get all roadmaps for the current user
   const { data, error } = await supabase
     .from('roadmaps')
     .select('*')
     .eq('user_id', user.id)
-    .order('created_at', { ascending: false }) // Сортировка по дате создания (новые первые)
+    .order('created_at', { ascending: false }) // Sort by creation date (newest first)
 
   if (error) {
     console.error('Error fetching roadmaps:', error)
     return { data: null, error }
   }
 
-  // Извлекаем roadmaps из JSONB поля
+  // Extract roadmaps from the JSONB field
   const roadmaps: Roadmap[] = data?.map((row) => row.roadmaps) || []
 
   console.log('Fetched roadmaps:', roadmaps)

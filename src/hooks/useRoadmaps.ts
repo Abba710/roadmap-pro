@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { Roadmap, Phase } from '../types/roadmap'
+import { insertData } from '@/service/insertData'
 
 /**
  * Custom hook for managing multiple roadmaps
@@ -59,7 +60,7 @@ export function useRoadmaps(initialRoadmaps: Roadmap[] = []) {
   const createRoadmap = useCallback(
     (name: string = 'New Roadmap', description: string = ''): string => {
       const newRoadmap: Roadmap = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         name,
         description,
         phases: [],
@@ -69,7 +70,7 @@ export function useRoadmaps(initialRoadmaps: Roadmap[] = []) {
 
       setRoadmaps((prev) => [...prev, newRoadmap])
       setActiveRoadmapId(newRoadmap.id)
-
+      insertData(newRoadmap)
       return newRoadmap.id
     },
     []

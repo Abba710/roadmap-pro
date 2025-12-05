@@ -13,6 +13,7 @@ import { useRoadmap } from '../../hooks/useRoadmap'
 import { useRoadmaps } from '../../hooks/useRoadmaps'
 import type { PlanType, UserSubscription } from '../../types/subscription'
 import exportToPDF from '../../utils/exportPDF'
+import { updateData } from '@/service/updateData'
 
 interface RoadmapBuilderProps {
   onBack: () => void
@@ -82,6 +83,9 @@ export function RoadmapBuilder({
     if (activeRoadmapId) {
       updateRoadmapPhases(activeRoadmapId, newPhases)
       setPhases(newPhases)
+    }
+    if (activeRoadmap) {
+      updateData(activeRoadmap)
     }
   }
 

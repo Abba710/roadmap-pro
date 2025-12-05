@@ -9,7 +9,7 @@ import { Footer } from '@/components/landing/Footer'
 import type { User } from '@/types/user'
 
 interface PricingPageProps {
-  currentPlan?: PlanType
+  currentPlan?: PlanType | null
   onUpgrade?: (plan: PlanType) => void
   onGetStarted?: () => void
   userData: User | null
@@ -21,7 +21,7 @@ interface PricingPageProps {
  * Pricing page component with all plan details
  */
 export function PricingPage({
-  currentPlan = 'free',
+  currentPlan = null,
   onUpgrade = () => {},
   onGetStarted = () => {},
   userData,
@@ -37,7 +37,12 @@ export function PricingPage({
 
   return (
     <div className="min-h-screen bg-white">
-      <Header onGetStarted={onGetStarted} userData={userData} onSignIn={onSignIn} onSignOut={onSignOut} />
+      <Header
+        onGetStarted={onGetStarted}
+        userData={userData}
+        onSignIn={onSignIn}
+        onSignOut={onSignOut}
+      />
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-br from-purple-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
